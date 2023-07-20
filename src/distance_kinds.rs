@@ -1,0 +1,172 @@
+use std::fmt;
+use std::str::FromStr;
+
+use crate::errors::DistanceError;
+
+#[derive(Debug, PartialEq)]
+pub enum DistanceMeasures {
+    Euclidean,
+    Manhattan,
+    Minkowski,
+    Chebyshev,
+    Sorensen,
+    Gower,
+    Soergel,
+    KulczynskiD,
+    Canberra,
+    Lorentzian,
+    Intersection,
+    NonIntersection,
+    WaveHedges,
+    Czekanowski,
+    Motyka,
+    KulczynskiS,
+    Tanimoto,
+    Ruzicka,
+    InnerProduct,
+    HarmonicMean,
+    Cosine,
+    KumarHassebrook,
+    Jaccard,
+    Dice,
+    Fidelity,
+    Bhattacharyya,
+    Hellinger,
+    Matusita,
+    SquaredChord,
+    SquaredEuclidean,
+    PearsonChiSq,
+    NeymanChiSq,
+    SquaredChiSq,
+    ProbSymmChiSq,
+    DivergenceSq,
+    ClarkSq,
+    AdditiveSymmChiSq,
+    KullbackLeibler,
+    Jeffreys,
+    KDivergence,
+    Topsoe,
+    JensenShannon,
+    JensenDifference,
+    Taneja,
+    KumarJohnson,
+    Avg,
+}
+
+impl FromStr for DistanceMeasures {
+    type Err = DistanceError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        #[rustfmt::skip]
+        let res = match s
+            .trim()
+            .replace([' ', '_', '-'], "")
+            .to_lowercase()
+            .as_str()
+        {
+            "euclidean"                   => Ok(Self::Euclidean),
+            "manhattan"                   => Ok(Self::Manhattan),
+            "minkowski"                   => Ok(Self::Minkowski),
+            "chebyshev"                   => Ok(Self::Chebyshev),
+            "sorensen"                    => Ok(Self::Sorensen),
+            "gower"                       => Ok(Self::Gower),
+            "soergel"                     => Ok(Self::Soergel),
+            "kulczynskid"                 => Ok(Self::KulczynskiD),
+            "kulczynskis"                 => Ok(Self::KulczynskiS),
+            "canberra"                    => Ok(Self::Canberra),
+            "lorentzian" | "lorentz"      => Ok(Self::Lorentzian),
+            "intersection"                => Ok(Self::Intersection),
+            "nonintersection"             => Ok(Self::NonIntersection),
+            "wavehedges"                  => Ok(Self::WaveHedges),
+            "czekanowski"                 => Ok(Self::Czekanowski),
+            "motyka"                      => Ok(Self::Motyka),
+            "tanimoto"                    => Ok(Self::Tanimoto),
+            "ruzicka"                     => Ok(Self::Ruzicka),
+            "innerproduct"                => Ok(Self::InnerProduct),
+            "harmonicmean"                => Ok(Self::HarmonicMean),
+            "cosine"                      => Ok(Self::Cosine),
+            "kumarhassebrook"             => Ok(Self::KumarHassebrook),
+            "jaccard"                     => Ok(Self::Jaccard),
+            "dice"                        => Ok(Self::Dice),
+            "fidelity"                    => Ok(Self::Fidelity),
+            "bhattacharyya"               => Ok(Self::Bhattacharyya),
+            "hellinger"                   => Ok(Self::Hellinger),
+            "matusita"                    => Ok(Self::Matusita),
+            "squaredchord"                => Ok(Self::SquaredChord),
+            "squaredeuclidean"            => Ok(Self::SquaredEuclidean),
+            "pearsonchisq"                => Ok(Self::PearsonChiSq),
+            "neymanchisq"                 => Ok(Self::NeymanChiSq),
+            "squaredchisq"                => Ok(Self::SquaredChiSq),
+            "probsymmchisq"               => Ok(Self::ProbSymmChiSq),
+            "divergencesq"                => Ok(Self::DivergenceSq),
+            "clarksq" | "clark"           => Ok(Self::ClarkSq),
+            "additivesymmchisq"           => Ok(Self::AdditiveSymmChiSq),
+            "kullbackleibler"             => Ok(Self::KullbackLeibler),
+            "jeffreys"                    => Ok(Self::Jeffreys),
+            "kdivergence"                 => Ok(Self::KDivergence),
+            "topsoe"                      => Ok(Self::Topsoe),
+            "jensenshannon"               => Ok(Self::JensenShannon),
+            "jensendifference" | "jensen" => Ok(Self::JensenDifference),
+            "taneja"                      => Ok(Self::Taneja),
+            "kumarjohnson"                => Ok(Self::KumarJohnson),
+            "avg" | "average"             => Ok(Self::Avg),
+            _                             => Err(DistanceError::ParseDistKindError(s.to_string())),
+        };
+        res
+    }
+}
+
+impl fmt::Display for DistanceMeasures {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        #[rustfmt::skip]
+        let s: &str = match &self {
+            Self::Euclidean         => "euclidean",
+            Self::Manhattan         => "manhattan",
+            Self::Minkowski         => "minkowski",
+            Self::Chebyshev         => "chebyshev",
+            Self::Sorensen          => "sorensen",
+            Self::Gower             => "gower",
+            Self::Soergel           => "soergel",
+            Self::KulczynskiD       => "kulczynski_d",
+            Self::Canberra          => "canberra",
+            Self::Lorentzian        => "lorentzian",
+            Self::Intersection      => "intersection",
+            Self::NonIntersection   => "non_intersection",
+            Self::WaveHedges        => "wave_hedges",
+            Self::Czekanowski       => "czekanowski",
+            Self::Motyka            => "motyka",
+            Self::KulczynskiS       => "kulczynski_s",
+            Self::Tanimoto          => "tanimoto",
+            Self::Ruzicka           => "ruzicka",
+            Self::InnerProduct      => "inner_product",
+            Self::HarmonicMean      => "harmonic_mean",
+            Self::Cosine            => "cosine",
+            Self::KumarHassebrook   => "kumar_hassebrook",
+            Self::Jaccard           => "jaccard",
+            Self::Dice              => "dice",
+            Self::Fidelity          => "fidelity",
+            Self::Bhattacharyya     => "bhattacharyya",
+            Self::Hellinger         => "hellinger",
+            Self::Matusita          => "matusita",
+            Self::SquaredChord      => "squared_chord",
+            Self::SquaredEuclidean  => "squared_euclidean",
+            Self::PearsonChiSq      => "pearson_chi_sq",
+            Self::NeymanChiSq       => "neyman_chi_sq",
+            Self::SquaredChiSq      => "squared_chi_sq",
+            Self::ProbSymmChiSq     => "prob_sym_chi_sq",
+            Self::DivergenceSq      => "divergence_sq",
+            Self::ClarkSq           => "clark_sq",
+            Self::AdditiveSymmChiSq => "additive_symm_chi_sq",
+            Self::KullbackLeibler   => "kullback_leibler",
+            Self::Jeffreys          => "jeffreys",
+            Self::KDivergence       => "k_divergence",
+            Self::Topsoe            => "topsoe",
+            Self::JensenShannon     => "jensen_shannon",
+            Self::JensenDifference  => "jensen_difference",
+            Self::Taneja            => "taneja",
+            Self::KumarJohnson      => "kumar_johnson",
+            Self::Avg               => "avg",
+        };
+
+        write!(f, "{}", s)
+    }
+}

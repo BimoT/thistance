@@ -1,0 +1,5 @@
+enum_descrom_align_treshold = 30
+struct_field_align_treshold = 30
+struct_lit_single_line = false
+match_block_trailing_comma = true
+chain_width = 40
